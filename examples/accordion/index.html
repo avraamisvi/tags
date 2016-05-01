@@ -4,6 +4,8 @@
 	<meta charset="utf-8">
 	<title>Teste Accordion</title>
 
+  <link href="../../lib/jquery-ui/jquery-ui.css" rel="stylesheet">
+
 	<!--<script src="../../lib/jquery/jquery-1.12.3.js"></script>-->
 	<script src="../../lib/jquery/jquery-2.2.3.js"></script>
 	<script src="../../lib/jquery-ui/jquery-ui.js"  	type="text/javascript"></script>
@@ -11,17 +13,17 @@
  	<script src="../../lib/nunjucks/nunjucks.js"></script>
 	<script src="../../lib/x-tag/x-tag-core.min.js"></script>
 
+  <script type="text/javascript" src="../../lib/tags/tags.js"></script>  
   <script type="text/javascript">
-    Tags = {
-      root_path: "http://localhost:9999/"  
-    }
+      Tags.root_path = "../../";
   </script>
 
-  <script type="text/javascript" src="../../lib/tags/src/accordion/accordion.js"></script>	
+  <script type="text/javascript" src="../../lib/tags/accordion/accordion.js"></script>  
+  <script type="text/javascript" src="../../lib/tags/autocomplete/autocomplete.js"></script>  
 
 </head>
 
-<body class="search-page internal">
+<body>
 
 <tags-accordion id="accordion">
 
@@ -35,13 +37,33 @@
   </tags-accordion-section>
   
   <tags-accordion-section title="Section 2">
-    <p>
-    Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-    ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
-    amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
-    odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-    </p>
-  </tags-accordion-section>
+    
+    <tags-autocomplete id="autocomplete">
+      <tags-option label="ActionScript" value="1" ></tags-option>
+      <tags-option label="AppleScript" value="1" ></tags-option>
+      <tags-option label="Asp" value="1" ></tags-option>
+      <tags-option label="BASIC" value="1" ></tags-option>
+      <tags-option label="C" value="1" ></tags-option>
+      <tags-option label="C++" value="1" ></tags-option>
+      <tags-option label="Clojure" value="1" ></tags-option>
+      <tags-option label="COBOL" value="1" ></tags-option>
+      <tags-option label="ColdFusion" value="1" ></tags-option>
+      <tags-option label="Erlang" value="1" ></tags-option>
+      <tags-option label="Fortran" value="1" ></tags-option>
+      <tags-option label="Groovy" value="1" ></tags-option>
+      <tags-option label="Haskell" value="1" ></tags-option>
+      <tags-option label="Java" value="1" ></tags-option>
+      <tags-option label="JavaScript" value="1" ></tags-option>
+      <tags-option label="Lisp" value="1" ></tags-option>
+      <tags-option label="Perl" value="1" ></tags-option>
+      <tags-option label="PHP" value="1" ></tags-option>
+      <tags-option label="Python" value="1" ></tags-option>
+      <tags-option label="Ruby" value="1" ></tags-option>
+      <tags-option label="Scala" value="1" ></tags-option>
+      <tags-option label="Scheme"      value="1" ></tags-option>
+    </tags-autocomplete>
+
+    <tags-autocomplete id="autocomplete1" source="source"></tags-autocomplete></tags-accordion-section>
 
   </div>
 </div>	
