@@ -24,6 +24,7 @@
 
 <body>
 
+
   <tags-grid id="grid1">
     <tags-columns>
       
@@ -38,5 +39,70 @@
     </tags-columns>
   </tags-grid>
 	
+
+  <tags-grid id="grid1" datasource="datasource1">
+    
+    <tags-grid-columns>
+      <tags-grid-column name="Produto" id="produto" label="Preço"></tags-grid-column>
+      <tags-grid-column name="Preco"   id="preco" label="Preço"></tags-grid-column>
+    </tags-grid-columns>
+
+  </tags-grid>
+
+  <tags-datasource id="datasource1" style="display: none;">
+
+    <tags-row> 
+      <tags-field name="produto" value="chai" type="string" ></tags-field>
+      <tags-field name="preco" value="100.00" type="number" ></tags-field>
+      
+      <tags-field name="Category" type="object" >
+        <tags-field name="name" type="string" value="cereais" ></tags-field>
+      </tags-field>
+
+    </tags-row>
+
+    <tags-row> 
+      <tags-field name="produto" value="cafe" type="string" ></tags-field>
+      <tags-field name="preco" value="90.0" type="number"></tags-field>
+
+      <tags-field name="Category" type="object" >
+        <tags-field name="name" type="string" value="cereais" ></tags-field>
+      </tags-field>
+
+    </tags-row>
+<!--
+    <tags-row> 
+      <tags-field name="produto" value="nescau" type="string" ></tags-field>
+      <tags-field name="preco" value="10.00" type="number"></tags-field>
+
+      <tags-field name="Category" type="object" >
+        <tags-field name="name" type="string" value="cereais" ></tags-field>
+      </tags-field>
+
+    </tags-row>
+
+    <tags-row> 
+      <tags-field name="produto" value="yogurte" type="string" ></tags-field>
+      <tags-field name="preco" value="1.00" type="number"></tags-field>
+
+      <tags-field name="Category" type="object" >
+        <tags-field name="name" type="string" value="cereais" ></tags-field>
+      </tags-field>
+
+    </tags-row>
+
+    <tags-row> 
+      <tags-field name="produto" value="espinafre" type="string" ></tags-field>
+      <tags-field name="preco" value="33.00" type="number"></tags-field>
+
+      <tags-field name="Category" type="object" >
+        <tags-field name="name" type="string" value="cereais" ></tags-field>
+      </tags-field>
+
+    </tags-row>  
+-->
+  </tags-datasource>
+
+
 </body>
 </html>

@@ -1,0 +1,58 @@
+<div id="grid_{{id}}"> 
+
+	<!-- colocar os headers adicionais aqui-->
+	<!-- colocar os headers adicionais aqui permitir template de celulas e outros elementos-->
+
+	<div id="grid_header_{{id}}" class="grid-header">
+		<div id="grid_header_content_{{id}}" class="grid-header-content">
+
+			<table role="grid">
+
+				<colgroup>
+					<col style="{{col_style}}"><col>
+				</colgroup>
+
+				<thead role="rowgroup">
+					<tr role="row">
+					
+						{% for column in columns %}
+							<th scope="col" role="columnheader" data-field="{{column.field.name}}" rowspan="1" data-index="{{column.index}}" id="{{column.id}}" class="grid-column-header">{{column.field.value}}</th>
+						{% endfor %}
+
+					</tr>
+				</thead>
+			
+			</table>
+
+		</div>
+	</div>
+
+	<div id="grid_body_{{id}}" class="grid-body">
+		<div id="grid_body_content_{{id}}" class="grid-body-content">
+
+
+			<table role="grid">
+
+				<colgroup>
+					<col style="{{col_style}}"><col>
+				</colgroup>
+
+				<tbody role="rowgroup">
+						{% for row in rows %}
+							<tr role="row">
+								
+								{% for field in row.fields %}
+									<td data-rowid="{{row.id}}" data-field="{{field.name}}" id="{{field.id}}" class="grid-cell{{field.	alt}}">{{field.value}}</td>
+								{% endfor %}
+
+							</tr>
+						{% endfor %}
+				</tbody>
+			
+			</table>
+
+
+		</div>
+	</div>
+
+</div>
