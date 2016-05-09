@@ -1,0 +1,14 @@
+<div class="rowheader" id="rowheader_{{child.id}}">
+  
+  <div class="rowheadercaption" id="rowheadercaption_{{child.id}}"><div id="buttonminus" class="expandButton"><a href="javascript:toggleRow('{{child.path}}')">
+  	
+  	{{ "-" if child.expanded else "+" }}
+
+  </a></div>{{child.text}}</div>
+
+	{% if child.expanded %}
+	  {% for row in row.children %}
+	  	{% include "row.html" %}
+	  {% endfor %}
+	{% endif %}	
+</div>

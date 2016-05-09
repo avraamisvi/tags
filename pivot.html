@@ -1,0 +1,62 @@
+
+<div id="pivotgrid_{{id}}">
+      
+      <div class="rowheaders">
+
+        {% for row in rowheaders %}
+        	{% include "row.html" %}
+        {% endfor %}
+
+      </div>
+
+      <div class="columns">
+        
+        <table id="tablecolumnsheaders_{{id}}" class="pure-table pure-table-bordered">        
+          
+          <colgroup>
+            <col style="width:120px;">
+            <col style="width:120px;">
+          </colgroup>
+
+          <thead>            
+
+			<tr>
+		        {% for column in columnheaders %}
+		        	{% include "column.html" %}
+		        {% endfor %}
+			</tr>
+
+          </thead>
+
+        </table>
+
+        <table id="tabledata_{{id}}" class="pure-table pure-table-bordered">        
+
+	        <colgroup>
+	          <col style="width:120px;">
+	          <col style="width:120px;">
+	        </colgroup>           	
+
+          <tbody>         
+            
+	        {% for row in rowdata %}
+	        	
+				<tr>
+	              
+	             {% for field in row.fields %}  
+	              	<td data-path="field.path" data-pathId="field.pathId">{{field.text}}</td>
+				 {% endfor %}            	              
+
+	            </tr>
+
+	        {% endfor %}        
+
+          </tbody>
+
+        </table>        
+
+      </div>
+    
+    </div>
+
+  </div>

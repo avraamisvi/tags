@@ -1,0 +1,45 @@
+
+
+	  	<th data-columnId="{{column.id}}"> 
+			
+			<a href="javascript:toggleColumn('{{column.path}}')">
+		  	
+		  		{{ "-" if column.expanded else "+" }}
+
+		  	</a>
+
+	  	  	{{column.text}}
+
+
+			{% if column.expanded %}
+	
+
+			        <table id="tablecolumnsheaders_{{column.id}}" class="pure-table pure-table-bordered">        
+			          
+			          <colgroup>
+			            <col style="width:120px;">
+			            <col style="width:120px;">
+			          </colgroup>
+
+			          <thead>            
+
+						<tr>
+					        {% for child in column.children %}
+					        	{% include "columnchild.html" %}
+					        {% endfor %}	
+						</tr>
+
+			          </thead>
+
+			        </table>
+
+
+			{% endif %}		  	
+
+	  	  </th>
+
+
+
+
+
+

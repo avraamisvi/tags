@@ -22,9 +22,9 @@
   <script type="text/javascript" src="lib/tags/pivotgrid/pivotgrid.js"></script>  
 
 <style>
-thead {color:green;}
+/*thead {color:green;}
 tbody {color:blue;}
-tfoot {color:red;}
+tfoot {color:red;}*/
 
 /*table, th, td {
     border-width: 1px;
@@ -32,29 +32,51 @@ tfoot {color:red;}
     border-style: solid;
 }*/
 
-#rowheader1 {
-    height: 43px;
-    border-width: 1px;
-    border-color: black;
-    border-style: solid;
-    text-align: center;
-    padding-top: 6px;
-    margin: 1px;
-    width: 160px;
+#pivotgrid {
+
 }
 
-#rowheaders {
+.rowheaders {
     float: left;
-    border: 1px solid black;    
+    /*border: 1px solid black;    */
     padding-top: 25px;
     padding-left: 1px;
     padding-right: 1px;
-    padding-bottom: 1px;    
+    padding-bottom: 1px;
+    margin-top: 10px;
+    font-weight: bold;
 }
 
-#rowheader2 {
-    margin-left: 45px;
-    margin-top: 4px;
+.rowheader {
+    height: 28px;
+    border-width: 1px;
+    border-color: #CBCBCB;
+    border-style: solid;
+    text-align: left;
+    padding-top: 6px;
+    padding-left: 12px;
+    margin: 1px;
+    width: 160px;
+    background-color: #E0E0E0;
+}
+
+.rowheader.expanded {
+    height: 63px;
+}
+
+.rowheader2 {
+    border-top: 1px solid #CBCBCB;
+    border-left: 1px solid #CBCBCB;
+    /*margin-left: 45px;*/
+    margin-top: 10px;
+    padding-top: 6px;
+    padding-left: 12px;    
+    height: 28px;
+}
+
+.expandButton {
+    float: left;
+    margin-right: 5px;  
 }
 
 </style>
@@ -65,17 +87,17 @@ tfoot {color:red;}
 
   <div id="container">
     
-    <div id="pivotgrid">
+    <!--<div id="pivotgrid">
       
       <div id="rowheaders">
 
         <div id="rowheader1">
           
-          <div id="rowheadercaption"><span id="buttonminus">-</span> Brasil</div>
+          <div id="rowheadercaption"><div id="buttonminus" class="expandButton"><a href="javascript:toggleRow(0)">-</a></div> Brasil</div>
 
 
           <div id="rowheader2">
-            <div id="rowheader2caption"><span id="buttonplus">+</span> Empresa x</div>
+            <div id="rowheader2caption"><div id="buttonplus" class="expandButton"><a href="javascript:toggleRow(1)">+</a></div> Empresa x</div>
           </div>
 
         </div>
@@ -84,20 +106,25 @@ tfoot {color:red;}
 
       <div id="columns">
         
-        <table id="tablecolumnsheaders" style="pure-table pure-table-bordered">        
-          <tbody>
-            <colgroup>
-              <col style="width:120px;">
-              <col style="width:120px;">
-            </colgroup>          
+        <table id="tablecolumnsheaders" class="pure-table pure-table-bordered">        
+          
+          <colgroup>
+            <col style="width:120px;">
+            <col style="width:120px;">
+          </colgroup>
+
+          <thead>            
+            
             <tr>
-              <td>January</td>
-              <td>February</td>
+              <th>January</th>
+              <th>February</th>
             </tr>
-          </tbody>
+
+          </thead>
+
         </table>
 
-        <table id="tabledata">        
+        <table id="tabledata" class="pure-table pure-table-bordered">        
           <tbody>
             <colgroup>
               <col style="width:120px;">
@@ -116,9 +143,123 @@ tfoot {color:red;}
 
       </div>
     
-    </div>
+    </div>-->
+
 
   </div>
 	
+  <script type="text/javascript">
+    
+    var pivotDefinition = {}
+    
+    var sourceData = [
+      {pais: "Brasil", empresa: "Empresa X", mes: "January", valor: 100},
+      {pais: "Brasil", empresa: "Empresa X", mes: "February", valor: 10}
+    ];
+
+    var pivotInternal = {
+      rowheaders:[{
+        id: "1",
+        path: "0",
+        expanded: false,
+        text: "Brasil",
+        sourceField: "pais",
+        children: [
+          {
+            id: "1_1",
+            path: "0:0",
+            expanded: false,
+            sourceField: "empresa",
+            text: "Empresa X",
+            children: []
+          }          
+        ]
+      }],
+      columnheaders:[
+        {
+          id: "col_1",
+          path: "0",
+          expanded: false,
+          text: "January",        
+          children: []
+        },
+        {
+          id: "col_2",
+          path: "1",
+          expanded: false,
+          text: "February",        
+          children: []
+        }        
+      ],
+      rowdata: []
+    }
+
+    //Fazendo o pior algoritmo
+
+    function toggleRow(path) {
+      
+      paths = path.split(":");
+
+      togglePath(pivotInternal.rowheaders, 0, paths);
+
+      generateRowData(pivotInternal.rowdata, pivotInternal.rowheaders, pivotInternal.columnheaders, sourceData, pivotDefinition);
+
+      $("#container").html(nunjucks.render("pivot.html", pivotInternal));
+    }
+
+    //muda o estado de expanded do path
+    function togglePath(list, index, paths) {
+      if(index == paths.length-1) {
+        list[paths[index]].expanded = !list[paths[index]].expanded;
+      } else {
+        togglePath(list[paths[index]].children, index++, paths);
+      }
+    }
+
+    //sem column expanded
+    //tem que ter uma linha a mais para cada linha para apresentar o calculo
+
+    function generateRowData(rowData, rowheaders, columnheaders, source, pivDefinition) {
+
+      for(i = 0; i < rowheaders.length; i++) {
+
+        var row = rowheaders[i];
+
+        var rowdat = {
+          id: "rowdata_" + i,
+          fields: []
+        }          
+        
+        var columns = [];
+
+        for(j = 0; j < columnheaders.length; j++) {
+
+            var col = columnheaders[j];
+
+            var field = {
+              path: row.id+"#"+col.id,
+              pathId:"",
+              text: source[i].valor //tenho que fazer um map reduce aqui e para cada data configurada associar um field measure
+            }              
+
+            rowdat.fields.push(field);
+        }
+
+        rowData.push(rowdat);
+
+        if(rowheaders[i].expanded) {
+          generateRowData(rowData, rowheaders[i].children, columnheaders, source, pivDefinition);
+        }        
+      }
+
+    }
+
+
+    $(document).ready(function(){
+      $("#container").html(nunjucks.render("pivot.html", pivotInternal));
+    });
+
+  </script>
+
 </body>
 </html>
